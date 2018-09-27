@@ -6,12 +6,12 @@
         <script src="bower_components/gitana/dist/gitana.js"></script>
         <script>
             Gitana.connect({
-                "clientKey": {{{clientKey}}},
-                "clientSecret": {{{clientSecret}}},
-                "username": {{{username}}},
-                "password": {{{password}}},
+                "clientKey": "",
+                "clientSecret": "",
+                "username": "",
+                "password": "",
                 "baseURL": "/proxy",
-                "application": {{{application}}}
+                "application": ""
             }, function(err) {
                 
                 this.platform().queryRepositories().then(function() {
