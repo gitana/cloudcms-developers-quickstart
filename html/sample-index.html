@@ -8,10 +8,10 @@
             Gitana.connect({
                 "clientKey": {{{clientKey}}},
                 "clientSecret": {{{clientSecret}}},
-                "username": "",
-                "password": "",
-                "baseURL": "/proxy",
-                "application": ""
+                "username": {{{username}}},
+                "password": {{{password}}},
+                "baseURL": {{{baseURL}}},
+                "application": {{{application}}}
             }, function(err) {
                 
                 this.platform().queryRepositories().then(function() {
