@@ -4,12 +4,12 @@
         <title>Cloud CMS Example (using a Proxy)</title>
         <script>
             Gitana.connect({
-                "clientKey": "",
-                "clientSecret": "",
-                "username": "",
-                "password": "",
-                "baseURL": "/proxy",
-                "application": ""
+                "clientKey": {{{clientKey}}},
+                "clientSecret": {{{clientSecret}}},
+                "username": {{{username}}},
+                "password": {{{password}}},
+                "baseURL": {{{baseURL}}},
+                "application": {{{application}}}
             }, function(err) {
                 
                 this.platform().queryRepositories().then(function() {
