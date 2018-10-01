@@ -1,15 +1,18 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        
+        <script src="bower_components/jquery/dist/jquery.js"></script>
+        <script src="bower_components/gitana/dist/gitana.js"></script>
         <title>Cloud CMS Example (using a Proxy)</title>
         <script>
             Gitana.connect({
-                "clientKey": {{{clientKey}}},
-                "clientSecret": {{{clientSecret}}},
-                "username": {{{username}}},
-                "password": {{{password}}},
-                "baseURL": {{{baseURL}}},
-                "application": {{{application}}}
+                "clientKey": "{{{clientKey}}}",
+                "clientSecret": "{{{clientSecret}}}",
+                "username": "{{{username}}}",
+                "password": "{{{password}}}",
+                "baseURL": "{{{baseURL}}}",
+                "application": "{{{application}}}"
             }, function(err) {
                 
                 this.platform().queryRepositories().then(function() {
