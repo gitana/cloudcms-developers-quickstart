@@ -15,8 +15,28 @@
                 "application": "{{{application}}}"
             }, function(err) {
                 
-                this.platform().queryRepositories().then(function() {
-                    $("textarea").append(JSON.stringify(this, null, "  "));
+                var html = "<table>";
+
+                this.datastore("content").readBranch("master").queryNodes({
+                }).each(function() {
+
+                    html += "<tr>";
+
+                    // image
+                    html += "<td class='preview'>";
+                    html += "<img src='/proxy" + this.getUri() + "/attachments/default'>";
+                    html += "</td>";
+                    html += "<td class='info'>";
+                    html += "<h3>" + this.title + "</h3>";
+                    html += "<p>" + this.body + "</p>";
+                    html += "</td>";
+                    html += "</tr>";
+
+                }).then(function() {
+
+                    html += "</table>";
+
+                    $("#content").append(html);
                 });
             });
         </script>
