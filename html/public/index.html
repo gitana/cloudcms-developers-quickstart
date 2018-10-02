@@ -2,13 +2,9 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         
-        <script src="bower-components/jquery/jquery.js"></script>
-        <script src="bower-components/gitana/gitana.js"></script>
-        <script src="vendor/bootstrap/dist/js/bootstrap.min.js"></script>
-        <link rel="stylesheet" href="vendor/bootstrap/dist/css/bootstrap.min.css"/>
-
-
-        <title>See All the Author Details Here</title>
+        <script src="/bower-components/jquery/jquery.js"></script>
+        <script src="/bower-components/gitana/gitana.js"></script>
+        <title>Cloud CMS Example (using a Proxy)</title>
         <script>
             Gitana.connect({
                 "clientKey": "{{{clientKey}}}",
@@ -18,31 +14,38 @@
                 "baseURL": "{{{baseURL}}}",
                 "application": "{{{application}}}"
             }, function(err) {
-                    var html = "<table>";
-                    this.datastore("content").readBranch("master").queryNodes({
-                        "_type": "my:author"
-                    }).each(function() {
-                        html += "<tr>";
-                        // image
-                        html += "<td>";
-                        html += "<img height='100' width='100' src='http://localhost/proxy/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.Image.id + "/attachments/default'> ";
-                        html += "</br>";
-                        html += "</br>";
-                        html += "</td>";
-                        html += "<td>";
-                        html += "<h3>" + this.title + "</h3>";
-                        html += "<p>" + this.Description + "</p>";
-                        html += "</td>";
-                        html += "</tr>";
-                    }).then(function() {
-                        html += "</table>";
-                        $("#result").append(html);
-                    });
+
+                var html = "<table>";
+
+                this.datastore("content").readBranch("master").queryNodes({
+                }).each(function() {
+
+                    html += "<tr>";
+
+                    // image
+                    html += "<td class='preview'>";
+                    html += "<img src='/proxy" + this.getUri() + "/attachments/default'>";
+                    html += "</td>";
+                    html += "<td class='info'>";
+                    html += "<h3>" + this.title + "</h3>";
+                    html += "<p>" + this.body + "</p>";
+                    html += "</td>";
+                    html += "</tr>";
+
+                }).then(function() {
+
+                    html += "</table>";
+
+                    $("#content").append(html);
+                });
             });
         </script>
     </head>
     <body>
         <h1>Cloud CMS Example (using Proxy)</h1>
         <div id="result"></div>
+        <div>
+            <textarea cols="120" rows="50" style="font-family: Courier"></textarea>
+        </div>
     </body>
 </html>
