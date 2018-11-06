@@ -1,48 +1,231 @@
-<html>
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <title>Cloud CMS Sample Website</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!--Custom fonts for this template -->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
 
     <script src="vendor/jquery/jquery.js"></script>
     <script src="vendor/gitana/gitana.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css"/>
 
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0-alpha.4/handlebars.min.js"></script>
 
-    <title>All the Authors in your Sample Project</title>
-    <script>
-        Gitana.connect({
-            "clientKey": "{{{clientKey}}}",
-            "clientSecret": "{{{clientSecret}}}",
-            "username": "{{{username}}}",
-            "password": "{{{password}}}",
-            "baseURL": "{{{baseURL}}}",
-            "application": "{{{application}}}"
-        }, function(err) {
-            var html = "<table>";
-            this.datastore("content").readBranch("master").queryNodes({
-                "_type": "my:author"
-            }).each(function() {
-                html += "<tr>";
-                // image
-                html += "<td>";
-                html += "<img height='100' width='100' src='http://localhost/proxy/repositories/" + this.getRepositoryId() + "/branches/" + this.getBranchId() + "/nodes/" + this.Image.id + "/attachments/default'> ";
-                html += "</br>";
-                html += "</br>";
-                html += "</td>";
-                html += "<td>";
-                html += "<h3>" + this.title + "</h3>";
-                html += "<p>" + this.Description + "</p>";
-                html += "</td>";
-                html += "</tr>";
-            }).then(function() {
-                html += "</table>";
-                $("#result").append(html);
+    <!-- Custom scripts for this template -->
+    <script src="js/quickstart.min.js"></script>
+
+    <!-- Custom styles for this template -->
+    <link href="css/quickstart.css" rel="stylesheet">
+
+  </head>
+
+  <script id="author-list" type="text/x-handlebars-template">
+
+      {{#each items}}
+      <div>
+          <div class="cta-content">
+              <img height='100' width='100' src= "{{imageURL}}">
+              <a href="author.html?id={{nodeId}}" class="btn btn-outline btn-xl js-scroll-trigger">{{title}}</a>
+          </div>
+      </div>
+      </br>
+      </br>
+      {{/each}}
+  </script>
+
+<script>
+    Gitana.connect({
+        "clientKey": "{{{clientKey}}}",
+        "clientSecret": "{{{clientSecret}}}",
+        "username": "{{{username}}}",
+        "password": "{{{password}}}",
+        "baseURL": "{{{baseURL}}}",
+        "application": "{{{application}}}"
+    }, function(err) {
+        var array =[];
+        this.datastore("content").readBranch("master").queryNodes({
+            "_type": "store:author"
+        }).each(function() {
+            array.push({
+                "title": this.title,
+                "nodeId": this._doc,
+                "QName": this.getQName(),
+                "repositoryId": this.getRepositoryId(),
+                "branchId": this.getBranchId(),
+                "imageURL": 'http://localhost/proxy/repositories/' + this.getRepositoryId() + '/branches/' + this.getBranchId() + '/nodes/' + this._doc + '/attachments/default'
+
             });
+        }).then(function () {
+            var templateHtml = $("#author-list").html();
+            var templateFn = Handlebars.compile(templateHtml);
+            var model = {
+                items : array
+            };
+            var html = templateFn(model);
+            $("ol").append(html);
         });
-    </script>
-</head>
-<body>
-<h1>Cloud CMS Example (using Proxy)</h1>
-<div id="result"></div>
-</body>
+    });
+</script>
+
+<script id="books-list" type="text/x-handlebars-template">
+
+    {{#each items}}
+    <div>
+        <div class="cta-content">
+            <img height='100' width='100' src= "{{imageURL}}">
+            <a href="book.html?id={{nodeId}}" class="btn btn-outline btn-xl js-scroll-trigger">{{title}}</a>
+      </div>
+    </div>
+    </br>
+    </br>
+    {{/each}}
+</script>
+
+<script>
+    Gitana.connect({
+        "clientKey": "{{{clientKey}}}",
+        "clientSecret": "{{{clientSecret}}}",
+        "username": "{{{username}}}",
+        "password": "{{{password}}}",
+        "baseURL": "{{{baseURL}}}",
+        "application": "{{{application}}}"
+    }, function(err) {
+        var array =[];
+        this.datastore("content").readBranch("master").queryNodes({
+            "_type": "store:book"
+        }).each(function() {
+            array.push({
+                "title": this.title,
+                "nodeId": this._doc,
+                "author": this.author,
+                "QName": this.getQName(),
+                "repositoryId": this.getRepositoryId(),
+                "branchId": this.getBranchId(),
+                "imageURL": 'http://localhost/proxy/repositories/' + this.getRepositoryId() + '/branches/' + this.getBranchId() + '/nodes/' + this._doc + '/attachments/default'
+
+            });
+        }).then(function () {
+            var templateHtml = $("#books-list").html();
+            var templateFn = Handlebars.compile(templateHtml);
+            var model = {
+                items : array
+            };
+            var html = templateFn(model);
+            $("data").append(html);
+        });
+    });
+</script>
+
+  <body id="page-top">
+      <div class="cloudcms-theme-header cloudcms-theme-header-platform fixed-top">
+          <nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
+            <div class="context-header">
+              <span class="context-header-logo-holder link-to-home" style="cursor: pointer;">
+                  <div>
+                      <img src="/public/img/login-logo.png" style="max-width: 320px">
+                  </div>
+              </span>
+          </div>
+              <div class="container">
+                  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                      Menu
+                      <i class="fas fa-bars"></i>
+                  </button>
+                  <div class="collapse navbar-collapse" id="navbarResponsive">
+                      <ul class="navbar-nav ml-auto">
+                          <li class="nav-item">
+                              <a class="nav-link js-scroll-trigger" href="#download">Download</a>
+                          </li>
+                          <li class="nav-item">
+                              <a class="nav-link js-scroll-trigger" href="www.cloudcms.com">About Cloud CMS</a>
+                          </li>
+                          <li class="nav-item">
+                              <a class="nav-link js-scroll-trigger" href="https://www.cloudcms.com/developers.html">Developers</a>
+                          </li>
+                          <li class="nav-item">
+                              <a class="nav-link js-scroll-trigger" href="https://www.cloudcms.com/contact.html">Contact Us</a>
+                          </li>
+                          <li class="nav-item">
+                              <a class="nav-link js-scroll-trigger" href="https://www.cloudcms.com/quickstart.html">QuickStart Guide</a>
+                          </li>
+                      </ul>
+                  </div>
+              </div>
+          </nav>
+      </div>
+
+    <section class="second">
+        <div class="cta-content">
+            <div class="container">
+                <h1><b>Welcome to Our Library</b></h1>
+                <a href="#authors" class="btn btn-outline btn-xl js-scroll-trigger">Click Here to have a look at all the Authors</a>
+                <a href="#books" class="btn btn-outline btn-xl js-scroll-trigger">Click Here to have a look at the Books</a>
+            </div>
+        </div>
+        <div class="overlay"></div>
+    </section>
+
+      <section class="cta" id="authors">
+          <div class="cta-content">
+              <div class="container">
+                  <h1><b>List of Authors in the library</b></h1>
+                  <ol></ol>
+              </div>
+          </div>
+          <div class="overlay"></div>
+      </section>
+
+    <section class="cta" id="books">
+        <div class="cta-content">
+            <div class="container">
+                <h1><b>List of Books in the library</b></h1>
+                  <data></data>
+            </div>
+        </div>
+        <div class="overlay"></div>
+    </section>
+
+    <section class="contact bg-primary" id="contact">
+      <div class="container">
+        <h1>Contact Us</h1>
+        <ul class="list-inline list-social">
+          <li class="list-inline-item social-twitter">
+            <a href="https://www.twitter.com/cloudcms">
+              <i class="fab fa-twitter"></i>
+            </a>
+          </li>
+          <li class="list-inline-item social-twitter">
+            <a href="https://www.linkedin.com/company/cloudcms">
+              <i class="fab fa-linkedin-in"></i>
+            </a>
+          </li>
+          <li class="list-inline-item social-google-plus">
+            <a href="https://plus.google.com/+Cloudcms">
+              <i class="fab fa-youtube"></i>
+            </a>
+          </li>
+          <li class="list-inline-item social-github">
+            <a href="https://github.com/gitana">
+              <i class="fab fa-github"></i>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <footer>
+      <div class="container">
+        <p>Copyright © 2018 <a href="https://www.cloudcms.com" target="blank">Cloud CMS</a> / All rights reserved.</p>
+      </div>
+    </footer>
+
+  </body>
+
 </html>
