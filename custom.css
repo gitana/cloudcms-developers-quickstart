@@ -1,0 +1,12 @@
+.navbar-brand img.logo
+{
+    max-width:50px;
+    display: inline-block;
+}
+
+.navbar-brand span.title
+{
+    display: inline-block;
+    font-size: 32px;
+    vertical-align: middle;
+}

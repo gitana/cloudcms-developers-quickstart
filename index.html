@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+
+    <title>Cloud CMS Quick Start</title>
+
+    <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.min.css">
+
+    <!-- Theme CSS -->
+    <link rel="stylesheet" href="theme/css/main.css">
+    <link rel="stylesheet" href="theme/css/green.css">
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500italic,500,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
+    <link rel="shortcut icon" href="images/favicon.ico">
+
+    <link rel="stylesheet" href="custom.css">
+
+</head>
+<body>
+
+    <div class="wrapper">
+        <header class="header">
+            <div class="navbar navbar-default navbar-default-book animate-dropdown" role="navigation">
+                <div class="container">
+                    <div class="header-mast">
+                        <div class="navbar-header">
+                            <a class="navbar-brand" href="index.html">
+                                <img class="logo" src="images/book-flat.png">
+                                <span class="title">Articles</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="container page-body"></div>
+    </div>
+
+    <!-- handlebars templates -->
+    <script id="template-article" type="text/x-handlebars-template">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="primary-block clearfix">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="book-cover book detail-book-cover">
+                                <a href="{{article.downloadURL}}">
+                                    <img src="{{article.coverURL}}" class="img-responsive" alt="{{{article.title}}}">
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-8">
+                            <div class="book-detail-header">
+                                <h2 class="book-title">{{{article.title}}}</h2>
+                                <p class="book-author">By <span class="book-author-name">{{article.author}}</span></p>
+                                <div class="star-rating">
+                                    <i class="fa fa-star {{#lte 1 article.rating}}color{{/lte}}"></i>
+                                    <i class="fa fa-star {{#lte 2 article.rating}}color{{/lte}}"></i>
+                                    <i class="fa fa-star {{#lte 3 article.rating}}color{{/lte}}"></i>
+                                    <i class="fa fa-star {{#lte 4 article.rating}}color{{/lte}}"></i>
+                                    <i class="fa fa-star {{#lte 5 article.rating}}color{{/lte}}"></i>
+                                </div>
+                                <p>{{{article.description}}}</p>
+
+                                {{#if article.tags}}
+                                <p>
+                                    {{#each article.tags}}
+                                <h4 style="display:inline-block">
+                                    <span class="label label-default"><a href="#" style="color:white">{{this}}</a></span>
+                                </h4>
+                                {{/each}}
+                                </p>
+                                {{/if}}
+
+                            </div>
+
+                            <div class="book-detail-body">
+
+                                <div class="product-description">
+                                    <h3>Summary</h3>
+                                    <p>{{{article.summary}}}</p>
+                                    <a class="btn btn-primary" href="{{article.downloadURL}}">Download</a>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr/>
+    </script>
+
+    <!-- scripts -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="vendor/handlebars/handlebars.js"></script>
+    <script src="vendor/gitana/gitana.js"></script>
+    <script src="custom.js"></script>
+
+</body>
+</html>
