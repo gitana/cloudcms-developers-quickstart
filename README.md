@@ -21,7 +21,7 @@ This GitHub repository contains the Cloud CMS QuickStart Application source code
 
 3. Pull down your gitana.json file
 
-    cloudcms application download-api-keys --application {{{application}}}
+    cloudcms application download-api-keys --application <%=application%>
     
     This file should be saved alongside index.html
 

@@ -10,12 +10,12 @@ $(document).ready(function() {
     var templateArticleFn = Handlebars.compile($("#template-article").html());
 
     Gitana.connect({
-        "clientKey": "{{{clientKey}}}",
-        "clientSecret": "{{{clientSecret}}}",
-        "username": "{{{username}}}",
-        "password": "{{{password}}}",
-        "baseURL": "{{{baseURL}}}",
-        "application": "{{{application}}}"
+        "clientKey": "<%=clientKey%>",
+        "clientSecret": "<%=clientSecret%>",
+        "username": "<%=username%>",
+        "password": "<%=password%>",
+        "baseURL": "<%=baseURL%>",
+        "application": "<%=application%>"
     }, function (err) {
 
         if (err) {
