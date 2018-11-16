@@ -27,7 +27,9 @@ $(document).ready(function() {
 
         this.datastore("content").readBranch("master").then(function() {
             var query = {
-                "_type": "my:article"
+                "_type": {
+                    "$or": ["custom:article", "my:article"]
+                }
             };
             var pagination = {
                 "sort": {
