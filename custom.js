@@ -36,8 +36,8 @@ $(document).ready(function() {
             };
             this.queryNodes(query, pagination).each(function() {
 
-                this.coverURL = "/proxy" + this.getUri() + "/preview/cover?name=default&mimetype=image/jpeg&size=300";
-                this.downloadURL = "/proxy" + this.getUri() + "/attachments/default?a=" + this.title;
+                this.coverURL = "/preview/" + this.getId() + "-preview.jpg?repository=" + this.getRepositoryId() + "&branch=" + this.getBranchId() + "&node=" + this.getId() + "&size=300&attachment=default";
+                this.downloadURL = "/static/" + this.getId() + "-image.jpg?repository=" + this.getRepositoryId() + "&branch=" + this.getBranchId() + "&node=" + this.getId() + "&attachment=default";
 
                 // ensure some defaults exists
                 if (typeof(this.title) === "undefined") {
